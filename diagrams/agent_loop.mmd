@@ -1,0 +1,14 @@
+flowchart LR
+    G["1. User goal<br/>(focused prompt: issue + AC + limits)"] --> P["2. Model / plan<br/>(Bolt Agent 'Standard' -<br/>underlying LLM not shown)"]
+    P --> T["3. Tool call<br/>read file / edit file /<br/>npm install / vitest / build"]
+    T --> O["4. Observation<br/>file content, test output,<br/>build result, preview"]
+    O -->|"more work needed"| N["5. Next step<br/>(model decides)"]
+    N --> T
+    O -->|"agent says done"| H{"6. Human review<br/>(me)"}
+    H -->|"reject / new focused prompt"| G
+    H -->|"accept: tests rerun by me +<br/>manual UI check"| A["Version saved<br/>(Bolt version history)"]
+
+    classDef human fill:#fde68a,stroke:#b45309,color:#000;
+    classDef agent fill:#dbeafe,stroke:#1d4ed8,color:#000;
+    class G,H human;
+    class P,T,O,N agent;
